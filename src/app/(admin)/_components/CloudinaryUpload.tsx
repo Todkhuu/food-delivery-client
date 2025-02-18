@@ -51,7 +51,7 @@ const CloudinaryUpload = () => {
 
   return (
     <div className="h-[100vh] flex flex-col items-center justify-center">
-      <Input onChange={handleFile} type="file" />
+      <Input onChange={handleFile} type="file" className="w-[400px]" />
       <Button onClick={handleUpload}>Upload</Button>
       {image && (
         <div>
