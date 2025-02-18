@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 const categories = [
   "Appetizers",
@@ -28,5 +29,26 @@ export function CarouselPlugin() {
     Autoplay({ delay: 2000, stopOnInteraction: true })
   );
 
-  return <div></div>;
+  return (
+    <Carousel
+      opts={{
+        align: "start",
+      }}
+      className="w-[99.9%] m-auto"
+    >
+      <CarouselContent className="">
+        {categories.map((category, index) => (
+          <CarouselItem key={index} className="basis-22">
+            <div>
+              <Button className="text-[18px] bg-secondary text-secondary-foreground">
+                {category}
+              </Button>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  );
 }

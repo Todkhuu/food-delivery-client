@@ -5,7 +5,7 @@ import { Categories } from "./_components/Categories";
 
 export default function Home() {
   return (
-    <div>
+    <div className="bg-[#404040]">
       <Header />
       <Image
         src={
