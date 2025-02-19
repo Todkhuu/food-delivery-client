@@ -4,6 +4,7 @@ import { Header } from "./_components/Header";
 import { Categories } from "./_components/Categories";
 import { Appetizers } from "./_components/Appetizers";
 import { Salads } from "./_components/Salads";
+import { Footer } from "./_components/Footer";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <Categories />
       <Appetizers />
       <Salads />
+      <Footer />
       <CloudinaryUpload />
     </div>
   );
