@@ -4,3 +4,14 @@ export type Category = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type foodType = {
+  _id: string;
+  foodName: string;
+  price: number;
+  image: string;
+  ingredients: string;
+  category: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

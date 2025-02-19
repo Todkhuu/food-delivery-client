@@ -11,22 +11,22 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "./ui/button";
 import { getData } from "@/utils/data";
-import { Category } from "@/utils/types";
+import { Category, foodType } from "@/utils/types";
 
 export function CarouselPlugin() {
   const [categories, setCategories] = React.useState<Category[] | null>(null);
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  );
 
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await getData("food-category");
       setCategories(data);
-      console.log(data);
     };
     fetchData();
   }, []);
+
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
 
   return (
     <Carousel
