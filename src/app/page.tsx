@@ -2,6 +2,7 @@ import Image from "next/image";
 import CloudinaryUpload from "./(admin)/_components/CloudinaryUpload";
 import { Header } from "./_components/Header";
 import { Categories } from "./_components/Categories";
+import { Appetizers } from "./_components/Appetizers";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         className="w-[100vw] h-[570px]"
       />
       <Categories />
+      <Appetizers />
       <CloudinaryUpload />
     </div>
   );

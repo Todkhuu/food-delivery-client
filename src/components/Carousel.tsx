@@ -9,25 +9,24 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-
-const categories = [
-  "Appetizers",
-  "Salads",
-  "Pizzas",
-  "Lunch favorites",
-  "Main dishes",
-  "Fish & Sea foods",
-  "Side dish",
-  "Brunch",
-  "Deserts",
-];
+import { getData } from "@/utils/data";
+import { Category } from "@/utils/types";
 
 export function CarouselPlugin() {
+  const [categories, setCategories] = React.useState<Category[] | null>(null);
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
   );
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData("food-category");
+      setCategories(data);
+      console.log(data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <Carousel
@@ -37,18 +36,18 @@ export function CarouselPlugin() {
       className="w-[99.9%] m-auto"
     >
       <CarouselContent className="">
-        {categories.map((category, index) => (
+        {categories?.map((category: Category, index: number) => (
           <CarouselItem key={index} className="basis-22">
             <div>
-              <Button className="text-[18px] bg-secondary text-secondary-foreground">
-                {category}
+              <Button className="text-[18px] bg-secondary text-secondary-foreground rounded-full px-5 py-1">
+                {category.categoryName}
               </Button>
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="bg-transparent border-none text-white" />
+      <CarouselNext className="bg-transparent border-none text-white" />
     </Carousel>
   );
 }

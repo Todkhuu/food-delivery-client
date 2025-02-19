@@ -3,13 +3,14 @@ import { InputDemo } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import { Dispatch } from "react";
 
 export const FirstStep = ({
   currentStep,
   setCurrentStep,
 }: {
-  currentStep: any;
-  setCurrentStep: any;
+  currentStep: number;
+  setCurrentStep: Dispatch<number>;
 }) => {
   const handleClick = () => {
     setCurrentStep(currentStep + 1);
