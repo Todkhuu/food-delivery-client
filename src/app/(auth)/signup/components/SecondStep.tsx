@@ -1,10 +1,9 @@
 "use client";
 import { ButtonDemo } from "@/components/Button";
-import { InputDemo } from "@/components/Input";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { Dispatch } from "react";
+import React, { Dispatch } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,21 +16,44 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
 
-const formSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long." })
-    .refine((password) => /[A-Z]/.test(password), {
-      message: "Password must include at least one uppercase letter.",
-    })
-    .refine((password) => /[a-z]/.test(password), {
-      message: "Password must include at least one lowercase letter.",
-    })
-    .refine((password) => /[0-9]/.test(password), {
-      message: "Password must include at least one number.",
-    }),
-});
+const formSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long." })
+      .refine((password) => /[A-Z]/.test(password), {
+        message: "Password must include at least one uppercase letter.",
+      })
+      .refine((password) => /[a-z]/.test(password), {
+        message: "Password must include at least one lowercase letter.",
+      })
+      .refine((password) => /[0-9]/.test(password), {
+        message: "Password must include at least one number.",
+      }),
+    confirm: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long." })
+      .refine((password) => /[A-Z]/.test(password), {
+        message: "Password must include at least one uppercase letter.",
+      })
+      .refine((password) => /[a-z]/.test(password), {
+        message: "Password must include at least one lowercase letter.",
+      })
+      .refine((password) => /[0-9]/.test(password), {
+        message: "Password must include at least one number.",
+      }),
+  })
+  .superRefine(({ password, confirm }, ctx) => {
+    if (password !== confirm) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords don't match",
+        path: ["confirm"],
+      });
+    }
+  });
 
 type firstStepProps = {
   currentStep: number;
@@ -39,12 +61,14 @@ type firstStepProps = {
 };
 
 export const SecondStep = ({ currentStep, setCurrentStep }: firstStepProps) => {
+  const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       password: "",
+      confirm: "",
     },
   });
 
@@ -67,13 +91,6 @@ export const SecondStep = ({ currentStep, setCurrentStep }: firstStepProps) => {
       <p className="text-[16px] text-[#71717a] mb-[24px]">
         Create a strong password with letters, numbers.
       </p>
-      {/* <div className="flex flex-col gap-[16px]">
-        <InputDemo type={"text"} placeholder={"Password"} />
-        <InputDemo type={"text"} placeholder={"Confirm"} />
-        <div>
-          <p className="text-[14px] text-[#71717a]">Show password</p>
-        </div>
-      </div> */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -82,7 +99,11 @@ export const SecondStep = ({ currentStep, setCurrentStep }: firstStepProps) => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -90,16 +111,33 @@ export const SecondStep = ({ currentStep, setCurrentStep }: firstStepProps) => {
           />
           <FormField
             control={form.control}
-            name="password"
+            name="confirm"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Confirm" {...field} />
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Confirm"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="showPassword"
+              checked={showPassword}
+              onCheckedChange={(checked: any) => setShowPassword(checked)}
+            />
+            <label
+              htmlFor="showPassword"
+              className="text-sm text-[#71717a] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Show password
+            </label>
+          </div>
           <ButtonDemo text={"Let's go"} />
         </form>
       </Form>

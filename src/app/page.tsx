@@ -23,7 +23,6 @@ export default function Home() {
       <Appetizers />
       <Salads />
       <Footer />
-      <CloudinaryUpload />
     </div>
   );
 }
