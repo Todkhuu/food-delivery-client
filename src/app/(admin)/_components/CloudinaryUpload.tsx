@@ -50,8 +50,14 @@ const CloudinaryUpload = () => {
   console.log(image);
 
   return (
-    <div className="h-[100vh] flex flex-col items-center justify-center">
-      <Input onChange={handleFile} type="file" className="w-[400px]" />
+    <label htmlFor="file-input">
+      <Input
+        id="file-input"
+        hidden
+        onChange={handleFile}
+        type="file"
+        // className="w-[400px]"
+      />
       <Button onClick={handleUpload}>Upload</Button>
       {image && (
         <div>
@@ -59,7 +65,7 @@ const CloudinaryUpload = () => {
           <a href={image}>view image</a>
         </div>
       )}
-    </div>
+    </label>
   );
 };
 export default CloudinaryUpload;

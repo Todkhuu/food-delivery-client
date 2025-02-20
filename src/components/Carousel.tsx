@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "./ui/button";
 import { getData } from "@/utils/data";
-import { Category, foodType } from "@/utils/types";
+import { Category } from "@/utils/types";
 
 export function CarouselPlugin() {
   const [categories, setCategories] = React.useState<Category[] | null>(null);

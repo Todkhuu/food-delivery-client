@@ -23,7 +23,7 @@ const sidebars = [
 
 export const Sidebar = () => {
   return (
-    <div className="min-w-[205px] h-screen py-[36px] px-[20px]">
+    <div className="min-w-[205px] h-screen py-[36px] px-[20px] bg-[#ffffff]">
       <div className="flex gap-3 items-center">
         <Image
           src={"/headerlogo.png"}

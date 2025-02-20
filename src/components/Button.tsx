@@ -1,18 +1,8 @@
 import { Button } from "@/components/ui/button";
 
-export function ButtonDemo({
-  text,
-  onClick,
-}: {
-  text?: string;
-  onClick?: any;
-}) {
+export function ButtonDemo({ text }: { text?: string }) {
   return (
-    <Button
-      variant={"secondary"}
-      onClick={onClick}
-      className="w-[100%] mt-[24px]"
-    >
+    <Button type="submit" variant={"secondary"} className="w-[100%] mt-[24px]">
       {text}
     </Button>
   );

@@ -79,23 +79,29 @@ export const Footer = () => {
         <div className="w-[788px] flex justify-between ml-[220px]">
           <div className="flex flex-col gap-4">
             <h3 className="text-[16px] text-[#71717a]">NOMNOM</h3>
-            {nomnom.map((nom) => (
-              <p className="text-[16px] text-[#fafafa]">{nom}</p>
+            {nomnom.map((nom, index) => (
+              <p key={index} className="text-[16px] text-[#fafafa]">
+                {nom}
+              </p>
             ))}
           </div>
           <div className="w-[320px] flex justify-between">
             <div className="flex flex-col gap-4">
               <h3 className="text-[16px] text-[#71717a]">MENU</h3>
-              {menu.map((menu) => (
-                <p className="text-[16px] text-[#fafafa]">{menu}</p>
+              {menu.map((menu, index) => (
+                <p key={index} className="text-[16px] text-[#fafafa]">
+                  {menu}
+                </p>
               ))}
             </div>
             <div className="flex flex-col gap-4">
               <h3>
                 <br></br>
               </h3>
-              {menus.map((menu) => (
-                <p className="text-[16px] text-[#fafafa]">{menu}</p>
+              {menus.map((menu, index) => (
+                <p key={index} className="text-[16px] text-[#fafafa]">
+                  {menu}
+                </p>
               ))}
             </div>
           </div>
@@ -109,8 +115,10 @@ export const Footer = () => {
         </div>
       </div>
       <div className="w-[1264px] m-auto flex gap-[48px] mt-[104px] border-t-[1px] border-[#71717a]">
-        {footer.map((footer) => (
-          <p className="text-[14px] text-[#71717a] pt-[32px]">{footer}</p>
+        {footer.map((footer, index) => (
+          <p key={index} className="text-[14px] text-[#71717a] pt-[32px]">
+            {footer}
+          </p>
         ))}
       </div>
     </div>

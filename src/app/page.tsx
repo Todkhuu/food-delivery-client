@@ -17,7 +17,7 @@ export default function Home() {
         width={1000}
         height={1000}
         alt=""
-        className="w-[100vw] h-[570px]"
+        className="w-[100vw] h-[570px] bg-center bg-cover"
       />
       <Categories />
       <Appetizers />
