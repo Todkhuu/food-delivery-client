@@ -19,7 +19,7 @@ export function CarouselPlugin() {
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await getData("food-category");
-      setCategories(data);
+      setCategories(data.data);
     };
     fetchData();
   }, []);

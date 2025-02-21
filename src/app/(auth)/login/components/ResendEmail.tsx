@@ -1,17 +1,22 @@
 import { ButtonDemo } from "@/components/Button";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
+import { Dispatch } from "react";
 
-export const ResendEmail = ({
-  currentStep,
-  setCurrentStep,
-}: {
-  currentStep: any;
-  setCurrentStep: any;
-}) => {
+type resendProps = {
+  currentStep: number;
+  setCurrentStep: Dispatch<number>;
+};
+
+export const ResendEmail = ({ currentStep, setCurrentStep }: resendProps) => {
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
   };
+
+  const handleClick = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
   return (
     <div className="w-[416px]">
       <Button onClick={handleBack} variant={"outline"} size="icon">
@@ -25,7 +30,7 @@ export const ResendEmail = ({
         <span className="text-[20px] text-black">"email oruulj irne"</span>{" "}
         Click the link in the email to verify your account.
       </p>
-      <ButtonDemo text={"Resend email"} />
+      <ButtonDemo onClick={handleClick} text={"Resend email"} />
     </div>
   );
 };

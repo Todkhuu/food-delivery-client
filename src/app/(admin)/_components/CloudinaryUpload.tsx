@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useState } from "react";
+import { FileImage } from "lucide-react";
 
 const CloudinaryUpload = () => {
   const [file, setFile] = useState<File>();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
 
   const PRESET_NAME = "food-delivery-app";
   const CLOUDINARY_NAME = "ds6kxgjh0";
@@ -17,6 +18,8 @@ const CloudinaryUpload = () => {
     const file = e.target.files[0];
     if (file) {
       setFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
     }
   };
 
@@ -51,20 +54,31 @@ const CloudinaryUpload = () => {
 
   return (
     <label htmlFor="file-input">
-      <Input
-        id="file-input"
-        hidden
-        onChange={handleFile}
-        type="file"
-        // className="w-[400px]"
-      />
-      <Button onClick={handleUpload}>Upload</Button>
-      {image && (
+      {/* <Button onClick={handleUpload}>Upload</Button> */}
+      {image ? (
         <div>
-          <Image alt="uploaded" src={image} width={400} height={400} />
-          <a href={image}>view image</a>
+          <Image
+            alt="uploaded"
+            src={image}
+            width={1000}
+            height={1000}
+            className="w-[100%] h-[138px] object-cover object-center rounded-md"
+          />
+        </div>
+      ) : (
+        <div>
+          <div className="h-[138px] border-[1px] rounded-md flex flex-col justify-center items-center">
+            <FileImage className="stroke-[#71717a] w-[18px] h-[18px]" />
+            <p className="text-[#71717a] text-[14px]">Add image</p>
+          </div>
         </div>
       )}
+      <Input
+        id="file-input"
+        onChange={handleFile}
+        type="file"
+        className="w-[400px] hidden"
+      />
     </label>
   );
 };

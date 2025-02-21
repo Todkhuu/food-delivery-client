@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Dispatch } from "react";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -38,6 +39,8 @@ type firstStepProps = {
 };
 
 export const Login = ({ currentStep, setCurrentStep }: firstStepProps) => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,11 +51,8 @@ export const Login = ({ currentStep, setCurrentStep }: firstStepProps) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    router.push("/");
   }
-
-  const handleClick = () => {
-    setCurrentStep(currentStep + 1);
-  };
 
   return (
     <div>
@@ -64,8 +64,6 @@ export const Login = ({ currentStep, setCurrentStep }: firstStepProps) => {
         Log in to enjoy your favorite dishes.
       </p>
       <div className="w-[416px] flex flex-col gap-[16px]">
-        {/* <InputDemo type={"text"} placeholder={"Enter your email address"} />
-        <InputDemo type={"text"} placeholder={"Password"} /> */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -95,11 +93,7 @@ export const Login = ({ currentStep, setCurrentStep }: firstStepProps) => {
             <ButtonDemo text={"Let's go"} />
           </form>
         </Form>
-        <Button
-          onClick={handleClick}
-          variant={"link"}
-          className="flex justify-start p-0"
-        >
+        <Button variant={"link"} className="flex justify-start p-0">
           <p className="text-[14px] text-[#71717a]">Forgot password ?</p>
         </Button>
       </div>
