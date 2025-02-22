@@ -1,7 +1,3 @@
-"use client";
-import * as React from "react";
-import Autoplay from "embla-carousel-autoplay";
-
 import {
   Carousel,
   CarouselContent,
@@ -10,24 +6,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "./ui/button";
-import { getData } from "@/utils/data";
 import { Category } from "@/utils/types";
 
-export function CarouselPlugin() {
-  const [categories, setCategories] = React.useState<Category[] | null>(null);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData("food-category");
-      setCategories(data.data);
-    };
-    fetchData();
-  }, []);
-
-  const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  );
-
+export function CarouselPlugin({ datas }: { datas: Category[] }) {
   return (
     <Carousel
       opts={{
@@ -36,7 +17,7 @@ export function CarouselPlugin() {
       className="w-[99.9%] m-auto"
     >
       <CarouselContent className="">
-        {categories?.map((category: Category, index: number) => (
+        {datas?.map((category: Category, index: number) => (
           <CarouselItem key={index} className="basis-22">
             <div>
               <Button className="text-[18px] bg-secondary text-secondary-foreground rounded-full px-5 py-1">
