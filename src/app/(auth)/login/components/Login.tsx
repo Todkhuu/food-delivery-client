@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Dispatch } from "react";
-import { FormLogin } from "@/components/FormLogin";
+import { FormLogin } from "@/app/(auth)/_components/FormLogin";
 import { ButtonIcon } from "../../_components/ButtonIcon";
 import { useRouter } from "next/navigation";
 import { Texts } from "../../_components/Texts";
+import { ButtonLink } from "../../_components/ButtonLink";
 
 type firstStepProps = {
   currentStep: number;
@@ -39,14 +39,7 @@ export const Login = ({ currentStep, setCurrentStep }: firstStepProps) => {
           <p className="text-[14px] text-[#71717a]">Forgot password ?</p>
         </Button>
       </div>
-      <div className="flex items-center justify-center mt-[24px]">
-        <p className="text-[16px] text-[#71717a]">Don’t have an account?</p>
-        <Link href={"/signup"}>
-          <Button variant={"link"}>
-            <p className="text-[#2563EB]">Sign up</p>
-          </Button>
-        </Link>
-      </div>
+      <ButtonLink text="Sign up" url="/signup" lorem="Don’t have an account?" />
     </div>
   );
 };

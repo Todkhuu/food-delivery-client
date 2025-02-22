@@ -1,13 +1,18 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
-import React, { Dispatch } from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { ButtonDemo } from "@/components/Button";
+import { Checkboxs } from "../../../components/Checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import React from "react";
 import { useRouter } from "next/navigation";
-import { FormShow } from "@/components/FormShow";
 
 const formSchema = z
   .object({
@@ -46,12 +51,7 @@ const formSchema = z
     }
   });
 
-type firstStepProps = {
-  currentStep: number;
-  setCurrentStep: Dispatch<number>;
-};
-
-export const SecondStep = ({ currentStep, setCurrentStep }: firstStepProps) => {
+export const FormShowPassword = ({ route }: { route: string }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
 
@@ -65,37 +65,50 @@ export const SecondStep = ({ currentStep, setCurrentStep }: firstStepProps) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    router.push("/login");
+    router.push(`${route}`);
   }
 
-  const handleBack = () => {
-    setCurrentStep(currentStep - 1);
-  };
   return (
-    <div className="w-[416px]">
-      <Button onClick={handleBack} variant={"outline"} size="icon">
-        <ChevronLeft />
-      </Button>
-      <h2 className="text-[24px] font-semibold mt-[24px]">
-        Create a strong password
-      </h2>
-      <p className="text-[16px] text-[#71717a] mb-[24px]">
-        Create a strong password with letters, numbers.
-      </p>
-      <FormShow
-        form={form}
-        onSubmit={onSubmit}
-        showPassword={showPassword}
-        setShowPassword={setShowPassword}
-      />
-      <div className="flex items-center justify-center mt-[24px]">
-        <p className="text-[16px] text-[#71717a]">Already have an account?</p>
-        <Link href={"/login"}>
-          <Button variant={"link"}>
-            <p className="text-[#2563EB]">Log in</p>
-          </Button>
-        </Link>
-      </div>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirm"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Confirm"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Checkboxs
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        />
+        <ButtonDemo text={"Let's go"} />
+      </form>
+    </Form>
   );
 };
