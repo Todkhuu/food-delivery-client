@@ -105,8 +105,10 @@ export const Tables = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {order.state?.map((state) => (
-                        <SelectItem value={`${state}`}>{state}</SelectItem>
+                      {order.state?.map((state, index) => (
+                        <SelectItem key={index} value={`${state}`}>
+                          {state}
+                        </SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
