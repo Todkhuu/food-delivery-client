@@ -48,7 +48,7 @@ const orders = [
 
 export const Tables = () => {
   return (
-    <div className="h-auto bg-white border-[1px] rounded-lg">
+    <div className="w-[80vw] h-auto bg-white border-[1px] rounded-lg">
       <div className="flex justify-between p-4 border-b-[1px]">
         <div>
           <h2 className="text-[20px] font-semibold">Orders</h2>

@@ -1,15 +1,16 @@
 import Image from "next/image";
-import CloudinaryUpload from "./(admin)/_components/CloudinaryUpload";
 import { Header } from "./_components/Header";
 import { Categories } from "./_components/Categories";
 import { Appetizers } from "./_components/Appetizers";
 import { Salads } from "./_components/Salads";
 import { Footer } from "./_components/Footer";
+import { HeaderLogin } from "./_components/HeaderLogin";
 
 export default function Home() {
   return (
     <div className="bg-[#404040]">
-      <Header />
+      {/* <Header /> */}
+      <HeaderLogin />
       <Image
         src={
           "https://res.cloudinary.com/ds6kxgjh0/image/upload/v1739879991/vicvaptwy3qsrgjo18j7.png"
