@@ -63,7 +63,7 @@ export const HeaderLogin = () => {
                 alt="vector"
               />
             </SheetTrigger>
-            <SheetContent className="bg-[#404040] border-none p-[32px]">
+            <SheetContent className="min-w-[535px] bg-[#404040] border-none p-[32px] overflow-scroll rounded-l-[20px]">
               <SheetHeader>
                 <SheetTitle className="flex gap-3">
                   <Image
