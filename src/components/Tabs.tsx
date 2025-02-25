@@ -1,12 +1,28 @@
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle } from "./ui/card";
 import { getData } from "@/utils/data";
 import { foodType } from "@/utils/types";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
 
-export const Tab = async () => {
-  const data = await getData(`food/category/1`);
+export const Tab = () => {
+  const [data, setData] = useState<foodType[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData(`food/category/2`);
+      setData(data.data);
+    };
+    fetchData();
+  }, []);
+
+  const deleteHandler = () => {
+    const remainingTasks = data.filter((data) => data._id !== data._id);
+    setData(remainingTasks);
+  };
+
   return (
     <Tabs defaultValue="account" className="mt-[24px]">
       <TabsList className="w-[100%] rounded-full">
@@ -27,7 +43,7 @@ export const Tab = async () => {
         <Card className="p-4 mt-[24px]">
           <CardTitle className="text-[20px] mb-[20px]">My cart</CardTitle>
           <div className="flex flex-col gap-[20px]">
-            {data.data.slice(0, 2).map((food: foodType, index: number) => (
+            {data?.map((food: foodType, index: number) => (
               <div
                 key={index}
                 className="flex gap-[10px] first:border-dashed first:border-b-[1px] first:pb-[20px]"
@@ -47,7 +63,11 @@ export const Tab = async () => {
                       </h2>
                       <p className="text-[12px] text-[]">{food.ingredients}</p>
                     </div>
-                    <div className="min-w-[36px] h-[36px] rounded-full border-[#ef4444] border-[1px] flex items-center justify-center">
+                    <Button
+                      onClick={() => deleteHandler()}
+                      variant={"ghost"}
+                      className="min-w-[36px] h-[36px] rounded-full border-[#ef4444] border-[1px] flex items-center justify-center"
+                    >
                       <Image
                         src={"/x.png"}
                         width={16}
@@ -55,7 +75,7 @@ export const Tab = async () => {
                         alt=""
                         className="w-[16px] h-[16px] object-cover object-center"
                       />
-                    </div>
+                    </Button>
                   </div>
                 </div>
               </div>
