@@ -38,7 +38,7 @@ export const Footer = () => {
   );
 
   return (
-    <div className=" w-[100vw] h-[755px] bg-[#18181b] mt-[134px] pt-[60px]">
+    <div className="w-[1440px] m-auto h-[755px] bg-[#18181b] mt-[134px] pt-[60px]">
       <Carousel
         opts={{
           align: "start",

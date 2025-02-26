@@ -1,3 +1,4 @@
+import { Paginations } from "@/components/Pagination";
 import { AvatarDemo } from "../_components/Avatar";
 import { Tables } from "../_components/Table";
 
@@ -8,6 +9,7 @@ const Orders = () => {
         <AvatarDemo />
       </div>
       <Tables />
+      <Paginations />
     </div>
   );
 };

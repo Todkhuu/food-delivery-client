@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import CloudinaryUpload from "./CloudinaryUpload";
+import { Button } from "@/components/ui/button";
 
 export const EditFood = () => {
   return (
@@ -15,7 +16,7 @@ export const EditFood = () => {
       <Dialog>
         <DialogTrigger>
           <Image
-            src={"/edit.png"}
+            src={"/edit-2.png"}
             width={16}
             height={16}
             alt=""
@@ -45,7 +46,14 @@ export const EditFood = () => {
               <CloudinaryUpload />
             </div>
           </div>
-          <div></div>
+          <div className="flex justify-between mt-[36px]">
+            <Button variant={"ghost"} className="border-[1px] p-3">
+              <Image src={"/trash.png"} width={16} height={16} alt="trash" />
+            </Button>
+            <Button>
+              <p>Save changes</p>
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

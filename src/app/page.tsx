@@ -8,7 +8,7 @@ import { HeaderLogin } from "./_components/HeaderLogin";
 
 export default function Home() {
   return (
-    <div className="bg-[#404040]">
+    <div className="w-[100vw] bg-[#404040]">
       {/* <Header /> */}
       <HeaderLogin />
       <Image
@@ -18,7 +18,7 @@ export default function Home() {
         width={1000}
         height={1000}
         alt=""
-        className="w-[100vw] h-[570px] bg-center bg-cover"
+        className="w-[1440px] m-auto h-[570px] bg-center bg-cover"
       />
       <Categories />
       <Appetizers />

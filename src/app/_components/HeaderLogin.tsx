@@ -20,7 +20,7 @@ import { Tab } from "@/components/Tabs";
 
 export const HeaderLogin = () => {
   return (
-    <div className="w-[100vw] h-[68px] bg-[#18181b] flex items-center">
+    <div className="max-w-[1440px] m-auto h-[68px] bg-[#18181b] flex items-center">
       <div className="w-[1264px] m-auto flex items-center justify-between">
         <div className="flex gap-3 items-center">
           <Image
