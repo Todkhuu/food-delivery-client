@@ -6,6 +6,8 @@ import {
 } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
 import { foodType } from "@/utils/types";
+import { CircleMinus, CirclePlus } from "lucide-react";
+import { Button } from "./ui/button";
 
 export const Dialogs = ({ datas }: { datas: foodType[] }) => {
   return (
@@ -42,20 +44,30 @@ export const Dialogs = ({ datas }: { datas: foodType[] }) => {
                   }}
                   className="w-[377px] h-[364px] rounded-xl bg-center bg-cover"
                 ></div>
-                <CardContent className="px-0 flex flex-col justify-between">
+                <CardContent className="px-0 py-0 flex flex-col justify-between">
                   <div>
                     <h2 className="text-[#ef4444] text-[30px] font-semibold">
                       {food.foodName}
                     </h2>
                     <p className="text-[16px] mt-[12px]">{food.ingredients}</p>
                   </div>
-                  <div className="flex">
-                    <div>
-                      <p className="text-[16px]">Total price</p>
-                      <h3 className="text-[24px] font-semibold text-[#09090b]">
-                        ${food.price}
-                      </h3>
+                  <div>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-[16px]">Total price</p>
+                        <h3 className="text-[24px] font-semibold text-[#09090b]">
+                          ${food.price}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CircleMinus className="stroke-[0.5px] w-[44px] h-[44px]" />
+                        <p className="text-[18px] font-semibold">1</p>
+                        <CirclePlus className="stroke-[0.5px] w-[44px] h-[44px]" />
+                      </div>
                     </div>
+                    <Button className="w-[100%] h-[44px] rounded-full mt-[24px]">
+                      Add to cart
+                    </Button>
                   </div>
                 </CardContent>
               </div>
