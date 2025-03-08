@@ -24,22 +24,22 @@ export const Tab = () => {
   };
 
   return (
-    <Tabs defaultValue="account" className="mt-[24px]">
+    <Tabs defaultValue="cart" className="mt-[24px]">
       <TabsList className="w-[100%] rounded-full">
         <TabsTrigger
-          value="account"
+          value="cart"
           className="w-[50%] rounded-full data-[state=active]:bg-[#ef4444] data-[state=active]:text-white text-black"
         >
           Cart
         </TabsTrigger>
         <TabsTrigger
-          value="password"
+          value="order"
           className="w-[50%] rounded-full data-[state=active]:bg-[#ef4444] data-[state=active]:text-white text-black"
         >
           Order
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="account">
+      <TabsContent value="cart">
         <Card className="p-4 mt-[24px]">
           <CardTitle className="text-[20px] mb-[20px]">My cart</CardTitle>
           <div className="flex flex-col gap-[20px]">
@@ -112,11 +112,12 @@ export const Tab = () => {
           </Button>
         </Card>
       </TabsContent>
-      <TabsContent value="password">
+      <TabsContent value="order">
         <Card className="mt-[20px] p-4">
           <CardHeader className="text-[20px] font-semibold p-0">
             Order history
           </CardHeader>
+          <div></div>
         </Card>
       </TabsContent>
     </Tabs>
