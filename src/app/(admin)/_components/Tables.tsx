@@ -45,6 +45,7 @@ const data: Payment[] = [
     email: "ken99@example.com",
     number: 1,
     food: ["Sunshine Stackers", "Sunshine Stackers"],
+    date: "2025-03-11",
   },
   {
     _id: "3u1reuv4",
@@ -53,6 +54,7 @@ const data: Payment[] = [
     email: "Abe45@example.com",
     number: 2,
     food: ["Sunshine Stackers", "Sunshine Stackers"],
+    date: "2025-03-11",
   },
 ];
 
@@ -63,6 +65,7 @@ export type Payment = {
   email: string;
   number: number;
   food: string[];
+  date: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -101,8 +104,25 @@ export const columns: ColumnDef<Payment>[] = [
     header: "Food",
   },
   {
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    accessorKey: "d",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div>Total</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
 
@@ -112,38 +132,38 @@ export const columns: ColumnDef<Payment>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div>{formatted}</div>;
     },
   },
   {
-    id: "actions",
-    enableHiding: false,
+    // id: "actions",
+    // enableHiding: false,
+    accessorKey: "status",
+    header: "Delivery state",
     cell: ({ row }) => {
       const payment = row.original;
-      {
-        data.map((data) => {
-          return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button defaultValue={data.status[0]} variant="ghost">
-                  {data.status[0]}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(payment._id)}
-                >
-                  Copy payment ID
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>View customer</DropdownMenuItem>
-                <DropdownMenuItem>View payment details</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          );
-        });
-      }
+      data?.map((data) => {
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button defaultValue={data.status[0]} variant="ghost">
+                {data.status[0]}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(payment._id)}
+              >
+                Copy payment ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>View customer</DropdownMenuItem>
+              <DropdownMenuItem>View payment details</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      });
     },
   },
 ];

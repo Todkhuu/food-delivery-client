@@ -11,7 +11,10 @@ export const AddedFoods = async ({ category }: { category: Category }) => {
     <>
       {food.map((oneFood: foodType) => {
         return (
-          <div className="w-[270px] h-[241px] border-[1px] rounded-[20px] p-4">
+          <div
+            key={oneFood._id}
+            className="w-[270px] h-[241px] border-[1px] rounded-[20px] p-4"
+          >
             <div
               style={{ backgroundImage: `url(${oneFood.image})` }}
               className="w-[100%] h-[129px] rounded-xl bg-center bg-cover flex items-end justify-end p-[20px]"
