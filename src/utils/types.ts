@@ -13,6 +13,29 @@ export type foodType = {
   image: string;
   ingredients: string;
   category: string;
-  createdAt: Date;
-  updatedAt: Date;
+};
+
+export type UserType = {
+  _id: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  address: string;
+  role: "USER" | "ADMIN";
+  orderedFoods: string[];
+  // ttl
+  isVerified: boolean;
+};
+
+export type FoodOrderType = {
+  _id: string;
+  user: string;
+  totalPrice: number;
+  foodOrderItems: FoodOrderItemType[];
+  status: "PENDING" | "CANCELED" | "DELIVERED";
+};
+
+export type FoodOrderItemType = {
+  food: string;
+  quantity: number;
 };

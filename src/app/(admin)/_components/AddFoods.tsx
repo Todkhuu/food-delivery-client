@@ -10,16 +10,13 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import CloudinaryUpload from "./CloudinaryUpload";
 import { Button } from "@/components/ui/button";
-import { Category } from "@/utils/types";
 
 export const AddFoods = () => {
   return (
     <Dialog>
-      <DialogTrigger className="w-[270px] h-[241px] border-dashed border-[1px] rounded-[20px] border-[#ef4444] flex flex-col justify-center items-center ">
+      <DialogTrigger className="min-w-[270px] h-[241px] border-dashed border-[1px] rounded-[20px] border-[#ef4444] flex flex-col justify-center items-center">
         <Image src={"/iconButton.png"} width={40} height={40} alt="" />
-        <p className="w-[154px] text-[14px] mt-[24px]">
-          Add new Dish to Appetizers
-        </p>
+        <p className="w-[154px] text-[14px] mt-[24px]">Add new Dish to</p>
       </DialogTrigger>
       <DialogContent className="w-[460px]">
         <DialogTitle className="text-[18px]">

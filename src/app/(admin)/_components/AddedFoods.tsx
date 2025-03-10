@@ -4,12 +4,12 @@ import { Category, foodType } from "@/utils/types";
 
 export const AddedFoods = async ({ category }: { category: Category }) => {
   const foods = await getData("foods");
-  const gg = foods.data.filter((food: foodType) => {
+  const food = foods.data.filter((food: foodType) => {
     return food.category == category._id;
   });
   return (
     <>
-      {gg.map((oneFood: foodType) => {
+      {food.map((oneFood: foodType) => {
         return (
           <div className="w-[270px] h-[241px] border-[1px] rounded-[20px] p-4">
             <div

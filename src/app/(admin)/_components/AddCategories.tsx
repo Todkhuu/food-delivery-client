@@ -13,7 +13,6 @@ import Image from "next/image";
 
 export const AddCategories = async () => {
   const datas = await getData("food_category");
-  console.log("dddd", datas);
   return (
     <div className="h-[176px] bg-[#ffffff] p-[24px] rounded-[12px]">
       <h2 className="text-[20px] mb-[16px]">Dishes category</h2>

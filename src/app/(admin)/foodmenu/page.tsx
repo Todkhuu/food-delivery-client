@@ -7,7 +7,6 @@ import { Category } from "@/utils/types";
 
 export default async function FoodMenu() {
   const categories = await getData("food_category");
-  const foods = await getData("foods");
   return (
     <div className="bg-[#f4f4f5] w-[90.8vw] px-[40px]">
       <div className="w-[87vw] flex justify-end my-[24px]">
@@ -16,10 +15,15 @@ export default async function FoodMenu() {
       <AddCategories />
       {categories.data.map((category: Category) => {
         return (
-          <div className="h-auto bg-[#ffffff] my-[24px] rounded-[12px] p-[20px] flex gap-4">
+          <div
+            key={category._id}
+            className="h-auto bg-[#ffffff] my-[24px] rounded-[12px] p-[20px]"
+          >
             <h2></h2>
-            <AddFoods />
-            <AddedFoods category={category} />
+            <div className="h-auto bg-[#ffffff] flex flex-wrap gap-4">
+              <AddFoods />
+              <AddedFoods category={category} />
+            </div>
           </div>
         );
       })}
