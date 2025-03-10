@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,12 +12,12 @@ import { Category } from "@/utils/types";
 import Image from "next/image";
 
 export const AddCategories = async () => {
-  const datas = await getData("food_category/a");
+  const datas = await getData("food_category");
   console.log("dddd", datas);
   return (
     <div className="h-[176px] bg-[#ffffff] p-[24px] rounded-[12px]">
       <h2 className="text-[20px] mb-[16px]">Dishes category</h2>
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-wrap">
         {datas.data?.map((category: Category) => {
           return (
             <Button
@@ -25,10 +26,10 @@ export const AddCategories = async () => {
               key={category._id}
             >
               {category.categoryName}
+              <Badge className="rounded-full">{category.count}</Badge>
             </Button>
           );
         })}
-
         <Dialog>
           <DialogTrigger>
             <Image src={"/IconButton.png"} width={36} height={36} alt="" />

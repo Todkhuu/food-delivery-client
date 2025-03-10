@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import CloudinaryUpload from "./CloudinaryUpload";
 import { Button } from "@/components/ui/button";
+import { Category } from "@/utils/types";
 
 export const AddFoods = () => {
   return (

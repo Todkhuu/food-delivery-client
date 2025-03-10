@@ -3,6 +3,7 @@ export type Category = {
   categoryName: string;
   createdAt: Date;
   updatedAt: Date;
+  count: number;
 };
 
 export type foodType = {
