@@ -35,12 +35,37 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getData } from "@/utils/data";
-import { FoodOrderType } from "@/utils/types";
+import { DatePickerWithRange } from "@/components/DateRangePicker";
 
-const data = await getData("food_order");
+const data: Payment[] = [
+  {
+    _id: "m5gr84i9",
+    amount: 316,
+    status: "Pending",
+    email: "ken99@example.com",
+    number: 1,
+    food: ["Sunshine Stackers", "Sunshine Stackers"],
+  },
+  {
+    _id: "3u1reuv4",
+    amount: 242,
+    status: "Canceled",
+    email: "Abe45@example.com",
+    number: 2,
+    food: ["Sunshine Stackers", "Sunshine Stackers"],
+  },
+];
 
-export const columns: ColumnDef<FoodOrderType>[] = [
+export type Payment = {
+  _id: string;
+  amount: number;
+  status: "Pending" | "Canceled" | "Delivered";
+  email: string;
+  number: number;
+  food: string[];
+};
+
+export const columns: ColumnDef<Payment>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -64,38 +89,28 @@ export const columns: ColumnDef<FoodOrderType>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "PENDING",
-    header: "PENDING",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
+    accessorKey: "number",
+    header: "№",
   },
   {
-    accessorKey: "CANCELED",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          CANCELED
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    accessorKey: "email",
+    header: "Customer",
   },
   {
-    accessorKey: "DELIVERED",
+    accessorKey: `food.length`,
+    header: "Food",
+  },
+  {
+    accessorKey: "amount",
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
-      const DELIVERED = parseFloat(row.getValue("DELIVERED"));
+      const amount = parseFloat(row.getValue("amount"));
 
       // Format the amount as a dollar amount
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(DELIVERED);
+      }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
@@ -105,34 +120,35 @@ export const columns: ColumnDef<FoodOrderType>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment._id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      {
+        data.map((data) => {
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button defaultValue={data.status[0]} variant="ghost">
+                  {data.status[0]}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => navigator.clipboard.writeText(payment._id)}
+                >
+                  Copy payment ID
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>View customer</DropdownMenuItem>
+                <DropdownMenuItem>View payment details</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          );
+        });
+      }
     },
   },
 ];
 
 export function DataTableDemo() {
-  const [datas, setDatas] = React.useState();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -160,55 +176,30 @@ export function DataTableDemo() {
     },
   });
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData("food_order");
-      setDatas(data.data);
-    };
-    fetchData();
-  }, []);
-
-  console.log(datas);
-
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="default" className="ml-auto">
-              Change delivery state <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
+    <div className="w-full h-auto bg-white rounded-lg border">
+      <div className="flex items-center justify-between p-4">
+        <div>
+          <h2 className="text-[20px] font-semibold">Orders</h2>
+          <p className="text-[12px]">{data.length} items</p>
+        </div>
+        <div className="flex gap-3">
+          <DatePickerWithRange />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="default" className="rounded-full">
+                Change delivery state
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {data.map((data) => {
+                return <div key={data._id}>{data.status}</div>;
               })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-      <div className="rounded-md border">
+      <div className="border-t-[1px]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
