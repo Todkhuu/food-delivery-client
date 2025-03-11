@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +10,59 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import CloudinaryUpload from "./CloudinaryUpload";
 import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useState } from "react";
+import { Selects } from "../foodmenu/_components/Select";
+import { Category, foodType } from "@/utils/types";
 
-export const EditFood = () => {
+const formSchema = z.object({
+  dishName: z.string().min(4).max(50),
+  dishCategory: z.string(),
+  Ingredients: z.string(),
+  price: z.number(),
+  foodImage: z.string(),
+});
+
+export const EditFood = ({ foods }: { foods: foodType }) => {
+  const [ids, setIds] = useState<string>("");
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      dishName: "",
+      dishCategory: "",
+      Ingredients: "",
+      price: 0,
+      foodImage: "",
+    },
+  });
+
+  const editFood = async (id: string, dishName: string) => {
+    const response = await fetch(`http://localhost:8000/foods/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ dishName }),
+    });
+    // getDatas();
+  };
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+    editFood(ids, values.dishName);
+    setIds(foods._id);
+  };
+
   return (
     <div className="w-[44px] h-[44px] bg-white rounded-full flex items-center justify-center">
       <Dialog>
@@ -25,35 +77,117 @@ export const EditFood = () => {
         </DialogTrigger>
         <DialogContent className="w-[472px]">
           <DialogTitle className="text-[18px]">Dishes info</DialogTitle>
-          <div className="flex justify-between items-center">
-            <p className="text-[12px] text-[#71717a]">Dish name</p>
-            <Input className="w-[288px]" />
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-[12px] text-[#71717a]">Dish category</p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-[12px] text-[#71717a]">Ingredients</p>
-            <Textarea className="w-[288px]" />
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="text-[12px] text-[#71717a]">Price</p>
-            <Input className="w-[288px]" />
-          </div>
-          <div className="flex justify-between">
-            <p className="text-[12px] text-[#71717a]">Food image</p>
-            <div className="w-[288px] h-[116px]">
-              <CloudinaryUpload />
-            </div>
-          </div>
-          <div className="flex justify-between mt-[36px]">
-            <Button variant={"ghost"} className="border-[1px] p-3">
-              <Image src={"/trash.png"} width={16} height={16} alt="trash" />
-            </Button>
-            <Button>
-              <p>Save changes</p>
-            </Button>
-          </div>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="dishName"
+                render={({ field }) => (
+                  <FormItem className="flex justify-between items-center">
+                    <FormLabel className="text-[12px] text-[#71717a]">
+                      Dish name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        onClick={() =>
+                          form.setValue("dishName", foods.foodName)
+                        }
+                        className="w-[288px]"
+                        placeholder=""
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="dishCategory"
+                render={({ field }) => (
+                  <FormItem className="flex justify-between items-center">
+                    <FormLabel className="text-[12px] text-[#71717a]">
+                      Dish category
+                    </FormLabel>
+                    <FormControl>
+                      <Selects />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="Ingredients"
+                render={({ field }) => (
+                  <FormItem className="flex justify-between items-center">
+                    <FormLabel className="text-[12px] text-[#71717a]">
+                      Ingredients
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        onClick={() =>
+                          form.setValue("Ingredients", foods.ingredients)
+                        }
+                        className="w-[288px]"
+                        placeholder=""
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem className="flex justify-between items-center">
+                    <FormLabel className="text-[12px] text-[#71717a]">
+                      Price
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        onClick={() => form.setValue("price", foods.price)}
+                        className="w-[288px]"
+                        placeholder=""
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="foodImage"
+                render={({ field }) => (
+                  <FormItem className="flex justify-between items-center">
+                    <FormLabel className="text-[12px] text-[#71717a]">
+                      Food image
+                    </FormLabel>
+                    <FormControl>
+                      <div className="w-[288px] h-[116px]">
+                        <CloudinaryUpload />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-between mt-[36px]">
+                <Button variant={"ghost"} className="border-[1px] p-3">
+                  <Image
+                    src={"/trash.png"}
+                    width={16}
+                    height={16}
+                    alt="trash"
+                  />
+                </Button>
+                <Button type="submit">Add Category</Button>
+              </div>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
     </div>

@@ -3,10 +3,11 @@ import { EditFood } from "./EditFood";
 import { Category, foodType } from "@/utils/types";
 
 export const AddedFoods = async ({ category }: { category: Category }) => {
-  const foods = await getData("foods");
+  const foods = await getData(`foods`);
   const food = foods.data.filter((food: foodType) => {
     return food.category == category._id;
   });
+  console.log("food", foods);
   return (
     <>
       {food.map((oneFood: foodType) => {
@@ -19,7 +20,7 @@ export const AddedFoods = async ({ category }: { category: Category }) => {
               style={{ backgroundImage: `url(${oneFood.image})` }}
               className="w-[100%] h-[129px] rounded-xl bg-center bg-cover flex items-end justify-end p-[20px]"
             >
-              <EditFood />
+              <EditFood foods={oneFood} />
             </div>
             <div className="flex justify-between mt-[20px]">
               <h2 className="text-[#ef4444] text-[14px] ">
