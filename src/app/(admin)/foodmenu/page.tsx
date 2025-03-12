@@ -21,8 +21,8 @@ export default async function FoodMenu() {
           >
             <h2></h2>
             <div className="h-auto bg-[#ffffff] flex flex-wrap gap-4">
-              <AddFoods />
-              <AddedFoods category={category} />
+              <AddFoods category={category} />
+              <AddedFoods category={category} categories={categories} />
             </div>
           </div>
         );

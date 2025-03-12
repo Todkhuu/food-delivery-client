@@ -7,12 +7,12 @@ export type Category = {
 };
 
 export type foodType = {
-  _id: string;
+  _id?: string | any;
   foodName: string;
   price: number;
   image: string;
   ingredients: string;
-  category: string;
+  category?: string;
 };
 
 export type UserType = {

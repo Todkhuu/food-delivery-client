@@ -22,7 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useState } from "react";
-import { Selects } from "../foodmenu/_components/Select";
+import { ComboBox } from "../foodmenu/_components/ComboBox";
 import { Category, foodType } from "@/utils/types";
 
 const formSchema = z.object({
@@ -33,7 +33,12 @@ const formSchema = z.object({
   foodImage: z.string(),
 });
 
-export const EditFood = ({ foods }: { foods: foodType }) => {
+type editType = {
+  oneFood: foodType;
+  categories: Category[];
+};
+
+export const EditFood = ({ oneFood, categories }: editType) => {
   const [ids, setIds] = useState<string>("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,7 +65,17 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
     editFood(ids, values.dishName);
-    setIds(foods._id);
+    // setIds(foods._id);
+  };
+
+  const deleteFood = async (id: string) => {
+    const response = await fetch(`http://localhost:8000/foods/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    // getDatas();
   };
 
   return (
@@ -90,7 +105,7 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
                     <FormControl>
                       <Input
                         onClick={() =>
-                          form.setValue("dishName", foods.foodName)
+                          form.setValue("dishName", oneFood.foodName)
                         }
                         className="w-[288px]"
                         placeholder=""
@@ -110,7 +125,7 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
                       Dish category
                     </FormLabel>
                     <FormControl>
-                      <Selects />
+                      <ComboBox categories={categories} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,7 +142,7 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
                     <FormControl>
                       <Textarea
                         onClick={() =>
-                          form.setValue("Ingredients", foods.ingredients)
+                          form.setValue("Ingredients", oneFood.ingredients)
                         }
                         className="w-[288px]"
                         placeholder=""
@@ -148,7 +163,7 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        onClick={() => form.setValue("price", foods.price)}
+                        onClick={() => form.setValue("price", oneFood.price)}
                         className="w-[288px]"
                         placeholder=""
                         {...field}
@@ -168,7 +183,7 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
                     </FormLabel>
                     <FormControl>
                       <div className="w-[288px] h-[116px]">
-                        <CloudinaryUpload />
+                        {/* <CloudinaryUpload /> */}
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -176,7 +191,11 @@ export const EditFood = ({ foods }: { foods: foodType }) => {
                 )}
               />
               <div className="flex justify-between mt-[36px]">
-                <Button variant={"ghost"} className="border-[1px] p-3">
+                <Button
+                  onClick={() => deleteFood(oneFood._id)}
+                  variant={"ghost"}
+                  className="border-[1px] p-3"
+                >
                   <Image
                     src={"/trash.png"}
                     width={16}

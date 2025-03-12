@@ -2,9 +2,14 @@ import { getData } from "@/utils/data";
 import { EditFood } from "./EditFood";
 import { Category, foodType } from "@/utils/types";
 
-export const AddedFoods = async ({ category }: { category: Category }) => {
+type categoryType = {
+  categories: Category[];
+  category: Category;
+};
+
+export const AddedFoods = async ({ category, categories }: categoryType) => {
   const foods = await getData(`foods`);
-  const food = foods.data.filter((food: foodType) => {
+  const food = foods.data?.filter((food: foodType) => {
     return food.category == category._id;
   });
   console.log("food", foods);
@@ -20,7 +25,7 @@ export const AddedFoods = async ({ category }: { category: Category }) => {
               style={{ backgroundImage: `url(${oneFood.image})` }}
               className="w-[100%] h-[129px] rounded-xl bg-center bg-cover flex items-end justify-end p-[20px]"
             >
-              <EditFood foods={oneFood} />
+              <EditFood oneFood={oneFood} categories={categories} />
             </div>
             <div className="flex justify-between mt-[20px]">
               <h2 className="text-[#ef4444] text-[14px] ">
