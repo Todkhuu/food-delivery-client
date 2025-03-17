@@ -8,17 +8,20 @@ import { ButtonLink } from "../../_components/ButtonLink";
 type firstStepProps = {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
+  handleEmail: Dispatch<string>;
 };
 
 export const CreateAccount = ({
   currentStep,
   setCurrentStep,
+  handleEmail,
 }: firstStepProps) => {
   const router = useRouter();
 
   const handleBack = () => {
     router.push("/");
   };
+
   return (
     <div className="w-[416px]">
       <ButtonIcon handleBack={handleBack} />
@@ -26,7 +29,11 @@ export const CreateAccount = ({
         header="Create your account"
         paragraph="Sign up to explore your favorite dishes."
       />
-      <FormOneInput currentStep={currentStep} setCurrentStep={setCurrentStep} />
+      <FormOneInput
+        currentStep={currentStep}
+        setCurrentStep={setCurrentStep}
+        handleEmail={handleEmail}
+      />
       <ButtonLink text="Log in" url="/login" lorem="Already have an account?" />
     </div>
   );

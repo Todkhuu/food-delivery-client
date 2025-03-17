@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { Header } from "./_components/Header";
 import { Categories } from "./_components/Categories";
-import { Appetizers } from "./_components/Appetizers";
-import { Salads } from "./_components/Salads";
+import { Foods } from "./_components/Foods";
 import { Footer } from "./_components/Footer";
 import { HeaderLogin } from "./_components/HeaderLogin";
 
@@ -21,8 +20,7 @@ export default function Home() {
         className="w-[1440px] m-auto h-[570px] bg-center bg-cover"
       />
       <Categories />
-      <Appetizers />
-      <Salads />
+      <Foods />
       <Footer />
     </div>
   );

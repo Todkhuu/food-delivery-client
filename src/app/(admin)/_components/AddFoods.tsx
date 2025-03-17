@@ -80,7 +80,7 @@ export const AddFoods = ({ category }: categoryType) => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    createFood(values);
+    // createFood(values);
   };
 
   const handleFile = (file: File) => {

@@ -7,11 +7,13 @@ import { ButtonLink } from "../../_components/ButtonLink";
 type firstStepProps = {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
+  email: string;
 };
 
 export const CreatePassword = ({
   currentStep,
   setCurrentStep,
+  email,
 }: firstStepProps) => {
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
@@ -24,7 +26,7 @@ export const CreatePassword = ({
         header="Create a strong password"
         paragraph="Create a strong password with letters, numbers."
       />
-      <FormShowPassword route="/login" />
+      <FormShowPassword route="/login" email={email} />
       <ButtonLink text="Log in" url="/login" lorem="Already have an account?" />
     </div>
   );

@@ -11,6 +11,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Dispatch } from "react";
+import { UserType } from "@/utils/types";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -19,9 +20,14 @@ const formSchema = z.object({
 type StepProps = {
   currentStep: number;
   setCurrentStep: Dispatch<number>;
+  handleEmail: Dispatch<string>;
 };
 
-export const FormOneInput = ({ currentStep, setCurrentStep }: StepProps) => {
+export const FormOneInput = ({
+  currentStep,
+  setCurrentStep,
+  handleEmail,
+}: StepProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,6 +37,7 @@ export const FormOneInput = ({ currentStep, setCurrentStep }: StepProps) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setCurrentStep(currentStep + 1);
+    handleEmail(values.email);
   }
 
   return (

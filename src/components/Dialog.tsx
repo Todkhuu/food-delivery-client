@@ -1,3 +1,4 @@
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -5,14 +6,30 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card, CardContent } from "@/components/ui/card";
-import { foodType } from "@/utils/types";
+import { Category, foodType } from "@/utils/types";
 import { CircleMinus, CirclePlus } from "lucide-react";
 import { Button } from "./ui/button";
+import { getData } from "@/utils/data";
+import { useEffect, useState } from "react";
 
-export const Dialogs = ({ datas }: { datas: foodType[] }) => {
+export const Dialogs = ({ category }: { category: Category }) => {
+  const [foods, setFoods] = useState<foodType[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const food = await getData(`foods`);
+      setFoods(food.data);
+    };
+    fetchData();
+  }, []);
+
+  const filtered = foods?.filter(
+    (food: foodType) => food.category._id == category._id
+  );
+
   return (
     <div className="flex flex-wrap gap-[36px]">
-      {datas?.map((food: foodType, index: number) => {
+      {filtered?.map((food: foodType, index: number) => {
         return (
           <Dialog key={index}>
             <DialogTrigger className="text-left">

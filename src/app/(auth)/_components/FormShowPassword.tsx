@@ -11,8 +11,9 @@ import { Checkboxs } from "../../../components/Checkbox";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import React from "react";
+import React, { Dispatch } from "react";
 import { useRouter } from "next/navigation";
+import { UserType } from "@/utils/types";
 
 const formSchema = z
   .object({
@@ -51,7 +52,12 @@ const formSchema = z
     }
   });
 
-export const FormShowPassword = ({ route }: { route: string }) => {
+type FormShowPassword = {
+  route: string;
+  email: string;
+};
+
+export const FormShowPassword = ({ route, email }: FormShowPassword) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
 
@@ -63,8 +69,20 @@ export const FormShowPassword = ({ route }: { route: string }) => {
     },
   });
 
+  const createUser = async (email: string, password: string) => {
+    const response = await fetch(`http://localhost:8000/auth/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    console.log("res", response);
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    createUser(email, values.password);
     router.push(`${route}`);
   }
 

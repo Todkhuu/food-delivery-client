@@ -10,7 +10,7 @@ type categoryType = {
 export const AddedFoods = async ({ category, categories }: categoryType) => {
   const foods = await getData(`foods`);
   const food = foods.data?.filter((food: foodType) => {
-    return food.category == category._id;
+    return food.category._id == category._id;
   });
   console.log("food", foods);
   return (
