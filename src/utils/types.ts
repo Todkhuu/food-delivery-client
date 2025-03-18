@@ -19,15 +19,14 @@ export type foodType = {
 };
 
 export type UserType = {
-  _id: string;
+  _id?: string;
   email: string;
   password: string;
-  phoneNumber: string;
-  address: string;
-  role: "USER" | "ADMIN";
-  orderedFoods: string[];
-  // ttl
-  isVerified: boolean;
+  phoneNumber?: string;
+  address?: string;
+  role?: "USER" | "ADMIN";
+  orderedFoods?: string[];
+  // isVerified: boolean;
 };
 
 export type FoodOrderType = {

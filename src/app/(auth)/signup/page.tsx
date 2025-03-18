@@ -10,7 +10,6 @@ const Signup = () => {
   const handleEmail = (email: string) => {
     setEmail(email);
   };
-  console.log("email", email);
   return (
     <div className="w-2/5 flex justify-center items-center">
       <FormSteps

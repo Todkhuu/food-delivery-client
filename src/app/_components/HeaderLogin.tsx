@@ -1,3 +1,4 @@
+"use client";
 import { Input } from "@/components/ui/input";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -17,8 +18,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Tab } from "@/components/Tabs";
+import Link from "next/link";
 
 export const HeaderLogin = () => {
+  const Email = localStorage.getItem("email");
+  function deleteItem() {
+    localStorage.removeItem("email");
+    localStorage.removeItem("id");
+  }
   return (
     <div className="max-w-[1440px] m-auto h-[68px] bg-[#18181b] flex items-center">
       <div className="w-[1264px] m-auto flex items-center justify-between">
@@ -89,14 +96,17 @@ export const HeaderLogin = () => {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="flex flex-col items-center p-4">
-              <DropdownMenuLabel>Test@gmail.com</DropdownMenuLabel>
+              <DropdownMenuLabel>{Email ? Email : ""}</DropdownMenuLabel>
               <DropdownMenuItem>
-                <Button
-                  className="rounded-full bg-[#f4f4f5] "
-                  variant={"ghost"}
-                >
-                  Sign out
-                </Button>
+                <Link href={"/login"}>
+                  <Button
+                    onClick={() => deleteItem()}
+                    className="rounded-full bg-[#f4f4f5] "
+                    variant={"ghost"}
+                  >
+                    {Email ? "Sign out" : "Sign in"}
+                  </Button>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

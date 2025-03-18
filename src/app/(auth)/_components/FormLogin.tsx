@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { string, z } from "zod";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -39,10 +40,27 @@ export const FormLogin = () => {
     },
   });
 
+  const logIn = async (email: string, password: string) => {
+    const response = await fetch(`http://localhost:8000/auth/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const users = await response.json();
+    localStorage.setItem("id", users.data._id);
+    toast(users.message);
+    users.error ? users.message : router.push("/");
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    router.push("/");
+    console.log("value", values);
+    logIn(values.email, values.password);
+    localStorage.setItem("email", values.email);
+    localStorage.getItem("email");
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
