@@ -9,9 +9,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Category, foodType } from "@/utils/types";
 import { CircleMinus, CirclePlus } from "lucide-react";
 import { Button } from "./ui/button";
-import { getData } from "@/utils/data";
-import { useEffect, useState } from "react";
 import { useFood } from "@/app/_context/FoodContext";
+import { useOrder } from "@/app/_context/OrderContext";
 
 export const Dialogs = ({ category }: { category: Category }) => {
   const { foods } = useFood();
@@ -19,6 +18,11 @@ export const Dialogs = ({ category }: { category: Category }) => {
   const filtered = foods?.filter(
     (food: foodType) => food.category._id == category._id
   );
+
+  const { orders } = useOrder();
+  // console.log("Orders", orders);
+
+  const addHandleFood = () => {};
 
   return (
     <div className="flex flex-wrap gap-[36px]">

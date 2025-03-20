@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Sidebar } from "./_components/Sidebar";
-import { AvatarDemo } from "./_components/Avatar";
 
 type Props = {
   children: ReactNode;

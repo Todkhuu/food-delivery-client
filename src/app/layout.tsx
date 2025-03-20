@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "./(admin)/_components/Sidebar";
 import { Toaster } from "sonner";
 import { UserProvider } from "./_context/UserContext";
 import { FoodProvider } from "./_context/FoodContext";
