@@ -1,19 +1,10 @@
 "use client";
 import { CarouselPlugin } from "@/components/Carousel";
-import { getData } from "@/utils/data";
-import { Category } from "@/utils/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useCategory } from "../_context/CategoryContext";
 
 export const Categories = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData("food_category");
-      setCategories(data.data);
-    };
-    fetchData();
-  }, []);
+  const { categories } = useCategory();
 
   return (
     <div className="max-w-[1264px] m-auto mt-[32px]">

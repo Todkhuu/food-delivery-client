@@ -1,19 +1,10 @@
 "use client";
 import { Dialogs } from "@/components/Dialog";
-import { getData } from "@/utils/data";
 import { Category } from "@/utils/types";
-import { useEffect, useState } from "react";
+import { useCategory } from "../_context/CategoryContext";
 
 export const Foods = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData("food_category");
-      setCategories(data.data);
-    };
-    fetchData();
-  }, []);
+  const { categories } = useCategory();
 
   return (
     <div className="max-w-[1264px] m-auto mt-[72px]">

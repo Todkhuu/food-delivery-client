@@ -11,17 +11,10 @@ import { CircleMinus, CirclePlus } from "lucide-react";
 import { Button } from "./ui/button";
 import { getData } from "@/utils/data";
 import { useEffect, useState } from "react";
+import { useFood } from "@/app/_context/FoodContext";
 
 export const Dialogs = ({ category }: { category: Category }) => {
-  const [foods, setFoods] = useState<foodType[] | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const food = await getData(`foods`);
-      setFoods(food.data);
-    };
-    fetchData();
-  }, []);
+  const { foods } = useFood();
 
   const filtered = foods?.filter(
     (food: foodType) => food.category._id == category._id
