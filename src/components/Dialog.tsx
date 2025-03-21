@@ -19,10 +19,12 @@ export const Dialogs = ({ category }: { category: Category }) => {
     (food: foodType) => food.category._id == category._id
   );
 
-  const { orders } = useOrder();
+  const { addToBasket, setBasket } = useOrder();
+
+  // addToBasket(filtered: foodType[]);
   // console.log("Orders", orders);
 
-  const addHandleFood = () => {};
+  // const addHandleFood = () => {};
 
   return (
     <div className="flex flex-wrap gap-[36px]">

@@ -16,6 +16,7 @@ export type foodType = {
     categoryName: string;
     _id: string;
   };
+  quantity?: number;
 };
 
 export type UserType = {
@@ -33,7 +34,7 @@ export type FoodOrderType = {
   _id: string;
   user: string;
   totalPrice: number;
-  foodOrderItems: FoodOrderItemType[];
+  foodOrderItems: [foodType];
   status: "PENDING" | "CANCELED" | "DELIVERED";
 };
 

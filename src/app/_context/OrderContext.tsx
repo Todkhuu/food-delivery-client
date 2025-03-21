@@ -1,6 +1,6 @@
 "use client";
 import { getData } from "@/utils/data";
-import { FoodOrderType } from "@/utils/types";
+import { FoodOrderType, foodType } from "@/utils/types";
 import {
   createContext,
   ReactNode,
@@ -11,7 +11,10 @@ import {
 
 type OrderContextType = {
   orders: FoodOrderType[];
-  setOrders: (_foods: FoodOrderType[]) => void;
+  setOrders: (_orders: FoodOrderType[]) => void;
+  addToBasket: (food: foodType) => void;
+  basket: foodType[];
+  setBasket: (_basket: foodType[]) => void;
 };
 
 export const OrderContext = createContext<OrderContextType>(
@@ -24,6 +27,11 @@ export const useOrder = () => {
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<FoodOrderType[]>([]);
+  //   const [quantity, setQuantity] = useState<FoodOrderType>();
+
+  const [basket, setBasket] = useState<foodType[]>([]);
+
+  const addToBasket = (food: foodType) => {};
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +42,9 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <OrderContext.Provider value={{ orders, setOrders }}>
+    <OrderContext.Provider
+      value={{ orders, setOrders, addToBasket, setBasket, basket }}
+    >
       {children}
     </OrderContext.Provider>
   );

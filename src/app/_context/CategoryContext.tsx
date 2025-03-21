@@ -11,7 +11,7 @@ import {
 
 type CategoryContextType = {
   categories: Category[];
-  setCategories: (_foods: Category[]) => void;
+  setCategories: (_categories: Category[]) => void;
 };
 
 export const CategoryContext = createContext<CategoryContextType>(
