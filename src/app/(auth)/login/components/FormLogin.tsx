@@ -1,3 +1,4 @@
+"use client";
 import { ButtonDemo } from "@/components/Button";
 import {
   Form,
@@ -13,7 +14,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import axios from "axios";
-import { CheckCircle, CircleCheck, CircleX } from "lucide-react";
+import { CircleCheck, CircleX } from "lucide-react";
+import { Checkboxs } from "@/components/Checkbox";
+import React from "react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -23,6 +26,7 @@ const formSchema = z.object({
 });
 
 export const FormLogin = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -78,11 +82,19 @@ export const FormLogin = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Password" {...field} />
+                <Input
+                  placeholder="Password"
+                  {...field}
+                  type={showPassword ? "text" : "password"}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
+        />
+        <Checkboxs
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
         />
         <ButtonDemo text={"Let's go"} />
       </form>
