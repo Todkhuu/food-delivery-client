@@ -3,7 +3,7 @@ type TextsProps = {
   paragraph: string;
 };
 
-export const Texts = ({ header, paragraph }: TextsProps) => {
+export const Header = ({ header, paragraph }: TextsProps) => {
   return (
     <div>
       <h2 className="text-[24px] font-semibold mt-[24px]">{header}</h2>

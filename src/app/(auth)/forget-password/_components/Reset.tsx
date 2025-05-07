@@ -1,8 +1,5 @@
 "use client";
 import { Dispatch } from "react";
-import { ButtonIcon } from "../../_components/ButtonIcon";
-import { Texts } from "../../_components/Texts";
-import { ButtonLink } from "../../_components/ButtonLink";
 import {
   Form,
   FormControl,
@@ -16,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { ButtonDemo } from "@/components/Button";
 import { useRouter } from "next/navigation";
+import { BackButton, ButtonLink, Header } from "@/components/auth";
 
 type firstStepProps = {
   currentStep: number;
@@ -54,8 +52,8 @@ export const Reset = ({
 
   return (
     <div>
-      <ButtonIcon handleBack={handleBack} />
-      <Texts
+      <BackButton handleBack={handleBack} />
+      <Header
         header="Reset your password"
         paragraph="Enter your email to receive a password reset link."
       />
@@ -67,7 +65,11 @@ export const Reset = ({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Enter your email address" {...field} />
+                  <Input
+                    className="w-[420px]"
+                    placeholder="Enter your email address"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

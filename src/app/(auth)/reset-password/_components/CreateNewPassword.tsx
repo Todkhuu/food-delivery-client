@@ -1,5 +1,5 @@
 "use client";
-import { Texts } from "../../_components/Texts";
+import { Texts } from "../../../../components/auth/Header";
 import {
   Form,
   FormControl,

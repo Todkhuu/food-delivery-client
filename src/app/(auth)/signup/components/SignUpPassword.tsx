@@ -1,8 +1,6 @@
 import { Dispatch } from "react";
-import { FormShowPassword } from "@/app/(auth)/_components/FormShowPassword";
-import { ButtonIcon } from "../../_components/ButtonIcon";
-import { Texts } from "../../_components/Texts";
-import { ButtonLink } from "../../_components/ButtonLink";
+import { FormPassword } from "./FormPassword";
+import { BackButton, ButtonLink, Header } from "@/components/auth";
 
 type firstStepProps = {
   currentStep: number;
@@ -10,7 +8,7 @@ type firstStepProps = {
   email: string;
 };
 
-export const CreatePassword = ({
+export const SignUpPassword = ({
   currentStep,
   setCurrentStep,
   email,
@@ -21,12 +19,12 @@ export const CreatePassword = ({
 
   return (
     <div className="w-[416px]">
-      <ButtonIcon handleBack={handleBack} />
-      <Texts
+      <BackButton handleBack={handleBack} />
+      <Header
         header="Create a strong password"
         paragraph="Create a strong password with letters, numbers."
       />
-      <FormShowPassword route="/login" email={email} />
+      <FormPassword email={email} />
       <ButtonLink text="Log in" url="/login" lorem="Already have an account?" />
     </div>
   );

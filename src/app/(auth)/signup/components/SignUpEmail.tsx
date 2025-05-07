@@ -1,9 +1,8 @@
+"use client";
 import { Dispatch } from "react";
-import { FormOneInput } from "@/app/(auth)/_components/FormOneInput";
-import { ButtonIcon } from "../../_components/ButtonIcon";
+import { FormInput } from "@/app/(auth)/signup/components/FormInput";
 import { useRouter } from "next/navigation";
-import { Texts } from "../../_components/Texts";
-import { ButtonLink } from "../../_components/ButtonLink";
+import { BackButton, ButtonLink, Header } from "@/components/auth";
 
 type firstStepProps = {
   currentStep: number;
@@ -11,7 +10,7 @@ type firstStepProps = {
   handleEmail: Dispatch<string>;
 };
 
-export const CreateAccount = ({
+export const SignUpEmail = ({
   currentStep,
   setCurrentStep,
   handleEmail,
@@ -24,12 +23,12 @@ export const CreateAccount = ({
 
   return (
     <div className="w-[416px]">
-      <ButtonIcon handleBack={handleBack} />
-      <Texts
+      <BackButton handleBack={handleBack} />
+      <Header
         header="Create your account"
         paragraph="Sign up to explore your favorite dishes."
       />
-      <FormOneInput
+      <FormInput
         currentStep={currentStep}
         setCurrentStep={setCurrentStep}
         handleEmail={handleEmail}

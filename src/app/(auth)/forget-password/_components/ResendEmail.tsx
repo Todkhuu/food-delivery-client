@@ -1,7 +1,7 @@
 import { ButtonDemo } from "@/components/Button";
 import { Dispatch } from "react";
-import { ButtonIcon } from "../../_components/ButtonIcon";
-import { Texts } from "../../_components/Texts";
+import { ButtonIcon } from "../../../../components/auth/BackButton";
+import { Texts } from "../../../../components/auth/Header";
 import { Reset } from "./Reset";
 
 type resendProps = {

@@ -11,7 +11,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Dispatch } from "react";
-import { UserType } from "@/utils/types";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -23,7 +22,7 @@ type StepProps = {
   handleEmail: Dispatch<string>;
 };
 
-export const FormOneInput = ({
+export const FormInput = ({
   currentStep,
   setCurrentStep,
   handleEmail,
@@ -55,7 +54,7 @@ export const FormOneInput = ({
             </FormItem>
           )}
         />
-        <ButtonDemo text={"Send link"} />
+        <ButtonDemo text={"Let's go"} />
       </form>
     </Form>
   );

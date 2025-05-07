@@ -5,7 +5,7 @@ type ButtonIconProps = {
   handleBack: () => void;
 };
 
-export const ButtonIcon = ({ handleBack }: ButtonIconProps) => {
+export const BackButton = ({ handleBack }: ButtonIconProps) => {
   return (
     <Button onClick={handleBack} variant={"outline"} size="icon">
       <ChevronLeft />
