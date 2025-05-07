@@ -1,5 +1,4 @@
 "use client";
-import { Texts } from "../../../../components/auth/Header";
 import {
   Form,
   FormControl,
@@ -16,34 +15,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { Header } from "@/components/auth";
+import axios from "axios";
+import { CircleCheck, MailWarning } from "lucide-react";
 
 const formSchema = z
   .object({
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters long." })
-      .refine((password) => /[A-Z]/.test(password), {
-        message: "Password must include at least one uppercase letter.",
-      })
-      .refine((password) => /[a-z]/.test(password), {
-        message: "Password must include at least one lowercase letter.",
-      })
-      .refine((password) => /[0-9]/.test(password), {
-        message: "Password must include at least one number.",
-      }),
+      .min(8, { message: "Password must be at least 8 characters long." }),
     confirm: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters long." })
-      .refine((password) => /[A-Z]/.test(password), {
-        message: "Password must include at least one uppercase letter.",
-      })
-      .refine((password) => /[a-z]/.test(password), {
-        message: "Password must include at least one lowercase letter.",
-      })
-      .refine((password) => /[0-9]/.test(password), {
-        message: "Password must include at least one number.",
-      }),
+      .min(8, { message: "Password must be at least 8 characters long." }),
   })
   .superRefine(({ password, confirm }, ctx) => {
     if (password !== confirm) {
@@ -63,8 +46,13 @@ export const CreateNewPassword = () => {
   const id = searchParams.get("id");
 
   if (!id) {
-    return <div>aldaa garlaa</div>;
+    return (
+      <div>
+        <MailWarning />
+      </div>
+    );
   }
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -73,26 +61,23 @@ export const CreateNewPassword = () => {
     },
   });
 
-  const createNew = async (password: string, token: string) => {
-    const response = await fetch(`http://localhost:8000/auth/reset-password`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ password, token }),
+  const createNewPassword = async (password: string, token: string) => {
+    const res = await axios.post("http://localhost:8000/auth/reset-password", {
+      password,
+      token,
     });
-    const users = await response.json();
-    toast(users.message);
+    toast(res.data.message, {
+      icon: <CircleCheck size={18} className="text-green-500" />,
+    });
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    createNew(values.password, id!);
+    createNewPassword(values.password, id!);
     router.push("/login");
   }
   return (
     <div className="w-[416px]">
-      <Texts
+      <Header
         header="Create a new password"
         paragraph="Set a new password with a combination of letters and numbers for better
         security."

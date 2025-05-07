@@ -1,6 +1,6 @@
 type TextsProps = {
   header: string;
-  paragraph: string;
+  paragraph: string | React.ReactNode;
 };
 
 export const Header = ({ header, paragraph }: TextsProps) => {

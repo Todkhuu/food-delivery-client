@@ -1,0 +1,43 @@
+"use client";
+import { useState } from "react";
+import { toast } from "sonner";
+import { ResetEmail } from "./ResetEmail";
+import { ResendEmail } from "./ResendEmail";
+import axios from "axios";
+import { CircleCheck, CircleX } from "lucide-react";
+
+export const ForgetPassword = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [email, setEmail] = useState("");
+  const FormSteps = [ResetEmail, ResendEmail][currentStep];
+
+  const resetPassword = async (email: string) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:8000/auth/reset-password-request`,
+        { email }
+      );
+
+      if (res.data) {
+        toast(res.data.message, {
+          icon: <CircleCheck size={18} className="text-green-500" />,
+        });
+        setCurrentStep(1);
+      }
+    } catch (err: any) {
+      toast(err.response.data.message, {
+        icon: <CircleX size={18} className="text-red-500" />,
+      });
+    }
+  };
+
+  return (
+    <FormSteps
+      currentStep={currentStep}
+      setCurrentStep={setCurrentStep}
+      resetPassword={resetPassword}
+      email={email}
+      setEmail={setEmail}
+    />
+  );
+};

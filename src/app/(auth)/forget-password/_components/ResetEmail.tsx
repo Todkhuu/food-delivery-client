@@ -16,8 +16,6 @@ import { useRouter } from "next/navigation";
 import { BackButton, ButtonLink, Header } from "@/components/auth";
 
 type firstStepProps = {
-  currentStep: number;
-  setCurrentStep: Dispatch<number>;
   resetPassword: (email: string) => void;
   setEmail: Dispatch<string>;
 };
@@ -26,13 +24,9 @@ const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
-export const Reset = ({
-  currentStep,
-  setCurrentStep,
-  resetPassword,
-  setEmail,
-}: firstStepProps) => {
+export const ResetEmail = ({ resetPassword, setEmail }: firstStepProps) => {
   const router = useRouter();
+
   const handleBack = () => {
     router.push("/login");
   };
@@ -45,7 +39,6 @@ export const Reset = ({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setCurrentStep(currentStep + 1);
     resetPassword(values.email);
     setEmail(values.email);
   }

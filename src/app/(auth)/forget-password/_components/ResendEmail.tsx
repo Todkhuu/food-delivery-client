@@ -1,8 +1,6 @@
 import { ButtonDemo } from "@/components/Button";
 import { Dispatch } from "react";
-import { ButtonIcon } from "../../../../components/auth/BackButton";
-import { Texts } from "../../../../components/auth/Header";
-import { Reset } from "./Reset";
+import { BackButton, Header } from "@/components/auth";
 
 type resendProps = {
   currentStep: number;
@@ -22,12 +20,17 @@ export const ResendEmail = ({
   };
 
   return (
-    <div className="w-[416px]">
-      <ButtonIcon handleBack={handleBack} />
-      <Texts
+    <div className="w-[420px]">
+      <BackButton handleBack={handleBack} />
+      <Header
         header="Please verify Your Email"
-        paragraph="We just sent an email to Click the link in the email to verify your
-        account."
+        paragraph={
+          <>
+            We just sent an email to{" "}
+            <strong style={{ color: "black" }}>{email}</strong>. Click the link
+            in the email to verify your account.
+          </>
+        }
       />
       <ButtonDemo onClick={() => resetPassword(email)} text={"Resend email"} />
     </div>
