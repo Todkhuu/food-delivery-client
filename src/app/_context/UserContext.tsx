@@ -1,8 +1,17 @@
 "use client";
+import { getCurrentUser } from "@/lib/services/user";
 import { UserType } from "@/utils/types";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { CircleCheck, CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { toast } from "sonner";
 
 type UserContextType = {
   user?: UserType;
@@ -18,22 +27,37 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserType | undefined>(undefined);
 
   const login = async (email: string, password: string) => {
-    const res = await axios.post(`http://localhost:8000/auth/signin`, {
-      email,
-      password,
-    });
-    if (res.data.data?._id) {
+    try {
+      const res = await axios.post(`http://localhost:8000/auth/signin`, {
+        email,
+        password,
+      });
+      console.log("resLogin", res);
+
       localStorage.setItem("id", res.data.data._id);
-      setUser(res.data.data);
-      push("/");
+      toast(res.data.message, {
+        icon: <CircleCheck size={18} className="text-green-500" />,
+      });
+      if (res.data.data?._id) {
+        localStorage.setItem("id", res.data.data._id);
+        localStorage.setItem("email", res.data.data.email);
+        setUser(res.data.data);
+        push("/");
+      }
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      toast(error.response?.data.message || "Unknown error occurred", {
+        icon: <CircleX size={18} className="text-red-500" />,
+      });
     }
   };
 
   useEffect(() => {
     const loadUser = async () => {
-      const token = localStorage.getItem("id");
-      const data = await getCurrentUser(token);
-      setUser(data?.user);
+      const id = localStorage.getItem("id");
+      const data = await getCurrentUser(id);
+      console.log("data2", data);
+      setUser(data);
     };
     loadUser();
   }, []);
@@ -43,3 +67,4 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     </UserContext.Provider>
   );
 };
+export const useUser = () => useContext(UserContext);
