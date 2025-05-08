@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ResetEmail } from "./ResetEmail";
 import { ResendEmail } from "./ResendEmail";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { CircleCheck, CircleX } from "lucide-react";
 
 export const ForgetPassword = () => {
@@ -24,8 +24,9 @@ export const ForgetPassword = () => {
         });
         setCurrentStep(1);
       }
-    } catch (err: any) {
-      toast(err.response.data.message, {
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      toast(error.response?.data.message || "Unknown error occurred", {
         icon: <CircleX size={18} className="text-red-500" />,
       });
     }

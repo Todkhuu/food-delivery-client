@@ -43,6 +43,14 @@ export const CreateNewPassword = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      password: "",
+      confirm: "",
+    },
+  });
+
   const id = searchParams.get("id");
 
   if (!id) {
@@ -52,14 +60,6 @@ export const CreateNewPassword = () => {
       </div>
     );
   }
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      password: "",
-      confirm: "",
-    },
-  });
 
   const createNewPassword = async (password: string, token: string) => {
     const res = await axios.post("http://localhost:8000/auth/reset-password", {
